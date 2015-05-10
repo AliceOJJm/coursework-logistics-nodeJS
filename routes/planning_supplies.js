@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Operation = require('../models/operation');
 var Firm = require('../models/firm');
+var Transaction = require('../models/Transaction');
 
 function isLoggedIn(req, res, next) {
 
@@ -23,14 +24,9 @@ router.get('/', isLoggedIn, function(req, res, next) {
 });
 
 router.post('/', isLoggedIn, function(req, res) {
-    Operation.create({type: "planning", parameters: req.body.params, results: req.body.results, additional: req.body.additional, firm_id: req.user._id}, function (err) {
-        if (err) return handleError(err);
-        var query = {};
-        query['local.operations'] = req.user.local.operations + 1;
-        console.log(query);
-        Firm.update({_id: req.user._id}, query, function (err) {
-            res.end("yes");
-        });
+    var transaction = new Transaction("planning");
+    transaction.planningSupplies(req.body, req.user, function(result){
+        res.send(result);
     });
 });
 
