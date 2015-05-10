@@ -8,7 +8,7 @@ var City = require('../models/city');
 var Operation = require('../models/operation');
 var Vehicle = require('../models/vehicle');
 var Product = require('../models/product');
-
+var Firm = require('../models/firm');
 
 function isLoggedIn(req, res, next) {
 
@@ -37,6 +37,7 @@ router.get('/', isLoggedIn, function(req, res, next) {
 
 router.post('/', isLoggedIn, function(req, res, next) {
     Vehicle.find({}).sort('capacity').exec(function(err, vehicles) {
+        var additional = "";
         var weight = parseFloat(req.body.dimensions.split(',')[0]);
         var volume = req.body.dimensions.split(',')[1];
         var counter;
@@ -46,6 +47,7 @@ router.post('/', isLoggedIn, function(req, res, next) {
         }
         if(counter == vehicles.length){
             counter --;
+            additional += "Для перевозки потребуется до " + ((weight/vehicles[counter].capacity).toFixed(0) + 1) + " вагонов."
         }
         Country.findOne({title: req.body.origin_country}, function(err, origin_country){
             Country.findOne({title: req.body.destination_country}, function(err, destination_country){
@@ -58,11 +60,16 @@ router.post('/', isLoggedIn, function(req, res, next) {
                 }
                 var cost = (tax * weight * req.body.distance).toFixed(2);
                 var params = " Тип груза: " + req.body.cargo_type + " Вес(кг): " + weight + " Объём(м3): " + volume + " Точка погрузки: " + origin_country.title + ", " + req.body.origin + " Точка отгрузки: " + destination_country.title + ", " + req.body.destination;
-                var results = " Тип транспортного средства: " + vehicles[counter].title + " Примерная стоимость перевозки: " + cost + " Длина кратчайшего пути(км): " + req.body.distance;
+                var results = " Тип транспортного средства: " + vehicles[counter].title + " " + additional + " Примерная стоимость перевозки: " + cost + " Длина кратчайшего пути(км): " + req.body.distance;
                 Operation.create({type: "transportation", parameters: params, results: results, additional: req.body.additional, firm_id: req.user._id}, function (err) {
                     if (err) return handleError(err);
                 });
-                res.send({vehicle: vehicles[counter], cost: cost});
+                var query = {};
+                query['local.operations'] = req.user.local.operations + 1;
+                console.log(query);
+                Firm.update({_id: req.user._id}, query, function (err) {
+                });
+                res.send({vehicle: vehicles[counter], cost: cost, additional: additional});
             });
         });
     });

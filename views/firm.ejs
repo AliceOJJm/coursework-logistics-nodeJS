@@ -1,0 +1,7 @@
+<tr class="gradeA">
+    <td><%= user.local.title%></td>
+    <td class="center"><%= user.local.proxy%></td>
+    <td class="center"><%= user.local.email%></td>
+    <td class="center"><%= formatRegistrationDate(new Date(user._id.getTimestamp()))%></td>
+    <td class="center"><%= user.local.operations%></td>
+</tr>

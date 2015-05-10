@@ -88,8 +88,11 @@ router.put('/transport', isAdmin, function(req, res) {
 
 
 router.get('/firms', isAdmin, function(req, res) {
-    res.render('firms_management', {
-        firm : req.user // get the user out of session and pass to template
+    Firm.find(function(err, firms) {
+        res.render('firms_management', {
+            firm: req.user,
+            firms: firms
+        });
     });
 });
 

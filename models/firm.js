@@ -19,6 +19,7 @@ var firmSchema = mongoose.Schema({
         fax                 :{ type : String},
         headquarters        :{ type : String, required : true },
         is_admin            :{ type : Boolean, default : false },
+        operations          :{ type : Number, default : 0 },
         description         :{ type : String}
     }
 });

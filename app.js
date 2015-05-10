@@ -94,4 +94,8 @@ app.locals.formatDate = function(date){
   return moment(date).format('M.D.YYYY г. в h:mm');
 };
 
+app.locals.formatRegistrationDate = function(date){
+  return moment(date).format('M.D.YYYY г.');
+};
+
 module.exports = app;

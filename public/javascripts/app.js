@@ -6,7 +6,31 @@ $( document ).ready(function() {
 
     $("#order_p").fadeToggle(0);
     $("#order_d").fadeOut(0);
-
+    $("#firms_table").DataTable( {
+        "language": {
+            "lengthMenu": "Показывать _MENU_ записей на странице",
+            "zeroRecords": "Ничего не найдено",
+            "info": "Отображается _PAGE_ из _PAGES_ страниц",
+            "infoEmpty": "Нет записей",
+            "infoFiltered": "(отобрано из _MAX_ записей)",
+            "emptyTable":     "Нет записей",
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "loadingRecords": "Загрузка...",
+            "processing":     "Обработка...",
+            "search":         "Поиск:",
+            "paginate": {
+                "first":      "Первая",
+                "last":       "Последняя",
+                "next":       "Следующая",
+                "previous":   "Предыдущая"
+            },
+            "aria": {
+                "sortAscending":  ": отсортировать колонку по возрастанию",
+                "sortDescending": ": отсортировать колонку по убыванию"
+            }
+        }
+    });
     $( ".size_circle" ).mouseover(function() {
         $( this ).animate({"height": "220px", "width": "220px", "margin-left": "17%"}, 300);
     });
@@ -263,7 +287,7 @@ $( document ).ready(function() {
                 directionsDisplay.setDirections(response);
                 var parameters = {cargo_type: $("#cargo_type").val(), dimensions: $("#dimensions").val(), additional: $("#description").val(), origin_country: origin_country, origin: origin_city, destination_country: destination_country, destination: destination_city, distance: response.routes[0].legs[0].distance.value/1000};
                 $.post('/transportation', parameters, function (data){
-                    $('#results_area').html("Расстояние: <b>" + (response.routes[0].legs[0].distance.value/1000).toFixed(1) + " км</b><br><p> Тип транспортного срества: <b>" + data.vehicle.title + "</b></p><p class=\"res_span\">" + data.vehicle.additional + "</p>Стоимость транспортировки: <b>" + data.cost + "$</b><br>");
+                    $('#results_area').html("Расстояние: <b>" + (response.routes[0].legs[0].distance.value/1000).toFixed(1) + " км</b><br><p> Тип транспортного срества: <b>" + data.vehicle.title + "</b></p><p class=\"res_span\">" + data.vehicle.additional + "<p>" + data.additional + "</p>" + "</p>Стоимость транспортировки: <b>" + data.cost + "$</b><br>");
                     $('#resultsModal').modal('show');
                 });
             }
@@ -334,8 +358,8 @@ $( document ).ready(function() {
                     var I2 = I1 - (t2 - t1 + T) * O + q;
                     var t3 = t2 + T +(I2 - r)/O;
                     if(t3 < 0) t3 = 0;
-                    results = results + "  Первый заказ через(в днях): " + t1.toFixed(0) + "  Второй - " + t2.toFixed(0) + "  Третий - " + t3.toFixed(0);
-                    results_html = results_html + " <br>Интервал времени между заказами при условии соблюдения оптимальной партии поставки.<br> Первый заказ через(в днях): " + t1.toFixed(0) + "<br>  Второй - " + t2.toFixed(0) + "<br>  Третий - " + t3.toFixed(0) + "<br>";
+                    results = results + "  Первый заказ: " + getSupplyDate(t1.toFixed(0)) + "  Второй - " + getSupplyDate(t2.toFixed(0)) + "  Третий - " + getSupplyDate(t3.toFixed(0));
+                    results_html = results_html + " <br>Интервал времени между заказами при условии соблюдения оптимальной партии поставки.<br> Первый заказ: " + getSupplyDate(t1.toFixed(0)) + "<br>  Второй - " + getSupplyDate(t2.toFixed(0)) + "<br>  Третий - " + getSupplyDate(t3.toFixed(0)) + "<br>";
                 }
             }
             var parameters = {additional: $("#description").val(), params: params, results: results};
@@ -563,3 +587,10 @@ function createChart(){
         });
     });
 }
+
+function getSupplyDate(days){
+    var date = new Date(Date.now() + days*24*3600*1000);
+    var result = "";
+    result += date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + "г.";
+    return result;
+};

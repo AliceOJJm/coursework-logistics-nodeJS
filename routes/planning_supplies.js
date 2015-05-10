@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Operation = require('../models/operation');
+var Firm = require('../models/firm');
 
 function isLoggedIn(req, res, next) {
 
@@ -24,8 +25,13 @@ router.get('/', isLoggedIn, function(req, res, next) {
 router.post('/', isLoggedIn, function(req, res) {
     Operation.create({type: "planning", parameters: req.body.params, results: req.body.results, additional: req.body.additional, firm_id: req.user._id}, function (err) {
         if (err) return handleError(err);
+        var query = {};
+        query['local.operations'] = req.user.local.operations + 1;
+        console.log(query);
+        Firm.update({_id: req.user._id}, query, function (err) {
+            res.end("yes");
+        });
     });
-    res.end("yes");
 });
 
 router.get('/about', function(req, res, next) {

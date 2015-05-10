@@ -63,7 +63,7 @@ div.col-lg-4{
 }
 
 .account{
-    width: 60%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -85,6 +85,16 @@ div.col-lg-4{
    margin-left: 20%;
    width: 200px;
    height: 200px;
+}
+
+.sticker{
+   margin-top: 22%;
+   margin-left: -15%;
+   width: 100%;
+}
+
+.stick{
+   font-size: 15pt;
 }
 
 body{

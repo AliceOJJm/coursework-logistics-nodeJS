@@ -7,32 +7,62 @@
 <div class="navbar-wrapper">
     <div class="container">
         <div class="container marketing">
-            <div class="account">
-            <ul class="list-group">
-                <li class="list-group-item text-center"><h4>Аккаунт фирмы&nbsp;&nbsp;&nbsp;<c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="title" class="firm_title" title="Название фирмы:"><%= firm.local.title%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Email: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="email" class="firm_email" title="Email:"><%= firm.local.email%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Деятельность: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="line" class="firm_line" title="Деятельность:"><%= firm.local.line%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Доверенное лицо: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="proxy" class="firm_proxy" title="Доверенное лицо:"><%= firm.local.proxy%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Регистрационный номер: </strong></span><%= firm.local.registration_number%></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Адрес: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="address" class="firm_address" title="Головной офис:"><%= firm.local.headquarters%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Телефон: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="phone" class="firm_phone" title="Телефон:"><%= firm.local.phone%></c></h4></li>
-                <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Адрес: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="address" class="firm_address" title="Головной офис:"><%= firm.local.headquarters%></c></h4></li>
-                <% if (firm.local.fax){ %>
-                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Факс: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="fax" class="firm_fax" title="Факс:"><%= firm.local.fax%></c></h4></li>
-                 <% }%>
-                <% if (firm.local.description){ %>
-                <li class="list-group-item"><h4><span class="pull-left"><strong>О компании: </strong></span><br><br><c data-type="textarea" data-url="/profile" data-pk="<%=firm._id%>" id="description" class="firm_description" title="Описание:"><%= firm.local.description%></c></h4></li>
-                <% }%>
-
-            </ul>
+            <div class="col-lg-9">
+                <div class="account">
+                <ul class="list-group">
+                    <li class="list-group-item text-center"><h4>Аккаунт фирмы&nbsp;&nbsp;&nbsp;<c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="title" class="firm_title" title="Название фирмы:"><%= firm.local.title%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Email: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="email" class="firm_email" title="Email:"><%= firm.local.email%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Деятельность: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="line" class="firm_line" title="Деятельность:"><%= firm.local.line%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Доверенное лицо: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="proxy" class="firm_proxy" title="Доверенное лицо:"><%= firm.local.proxy%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Регистрационный номер: </strong></span><%= firm.local.registration_number%></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Адрес: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="address" class="firm_address" title="Головной офис:"><%= firm.local.headquarters%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Телефон: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="phone" class="firm_phone" title="Телефон:"><%= firm.local.phone%></c></h4></li>
+                    <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Адрес: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="address" class="firm_address" title="Головной офис:"><%= firm.local.headquarters%></c></h4></li>
+                    <% if (firm.local.fax){ %>
+                        <li class="list-group-item text-right"><h4><span class="pull-left"><strong>Факс: </strong></span><c data-type="text" data-url="/profile" data-pk="<%=firm._id%>" id="fax" class="firm_fax" title="Факс:"><%= firm.local.fax%></c></h4></li>
+                     <% }%>
+                    <% if (firm.local.description){ %>
+                    <li class="list-group-item"><h4><span class="pull-left"><strong>О компании: </strong></span><br><br><c data-type="textarea" data-url="/profile" data-pk="<%=firm._id%>" id="description" class="firm_description" title="Описание:"><%= firm.local.description%></c></h4></li>
+                    <% }%>
+                </ul>
+                </div>
             </div>
-
-            <!-- FOOTER -->
-            <footer>
-                <!--p class="pull-right"><a href="#">Back to top</a></p-->
-                <p>&copy; 2015</p>
-            </footer>
-
+            <div class="col-lg-3">
+                <div class="sticker">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="glyphicon glyphicon-send"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div>Количество проведённых операций</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">&nbsp;
+                            <span class="pull-right stick"><%= firm.local.operations%></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticker">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div>Дата регистрации на сайте</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">&nbsp;
+                            <span class="pull-right stick"><%= formatRegistrationDate(new Date(firm._id.getTimestamp()))%></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div><!-- /.container -->
     </div>
 </div>
