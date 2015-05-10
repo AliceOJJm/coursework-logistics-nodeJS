@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container" id="vehicles_container">
+        <div class="container marketing">
+            <% if(vehicles.length == 0){%>
+            <h3 align = "center">В базе нет ни одного транспортного средства.</h3><br>
+            <button type="button" class="btn btn-default" id="add_vehicle">+ Добавить</button>
+            <% }else {%>
+            <h3 align = "center">Список транспортных средств</h3><br>
+            <button type="button" class="btn btn-default" id="add_vehicle">+ Добавить</button>
+            <h4 align = "center"><b></b></h4><br>
+                <% for (var counter = 0; counter < vehicles.length; counter ++){%>
+                <% var vehicle = vehicles[counter];%>
+                <% include vehicle%>
+            <% }}%>
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="vehicleModal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog"  style="width:40%;">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2 align="center">Добавление нового транспортного средства</h2>
+            </div>
+            <div class="modal-body">
+                <form id = "addVehicle" class="toggleForm">
+                    <div class="form-group">
+                        <label>Название:</label>
+                        <input type="text" class="form-control" name="title" id="title_" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Вид транспорта:</label>
+                        <select class="form-control" name="type" id="type_">
+                            <option value = "автомобильный">автомобильный</option>
+                            <option value = "железнодорожный">железнодорожный</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Грузоподъёмность:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="capacity" id="capacity_" required>
+                            <span class="input-group-addon"><span><b>&nbsp;т&nbsp;</b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Вместительность:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name = "cargo_volume" id = "cargo_volume_" required>
+                            <span class="input-group-addon"><span><b>м3</b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Тип грузов:</label>
+                        <select class="form-control" name="cargo_type" id="cargo_type_">
+                            <option value = "универсальные">универсальные</option>
+                            <option value = "хрупкие">хрупкие</option>
+                            <option value = "очень хрупкие">очень хрупкие</option>
+                            <option value = "насыпные">насыпные</option>
+                            <option value = "навалочные">навалочные</option>
+                            <option value = "наливные">наливные</option>
+                            <option value = "прод. питания">прод. питания</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Стоимость перевозки:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name = "tax_addon" id = "tax_addon_" required>
+                            <span class="input-group-addon"><span><b>$/км</b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание:</label>
+                        <textarea id="description_" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="button" id = "submitAddVehicle" class="btn btn-warning btn-lg">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

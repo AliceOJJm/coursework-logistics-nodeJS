@@ -1,0 +1,12 @@
+<div class="panel panel-default" id="editProduct">
+    <div class="panel-body">
+        <a class="close" id="<%=product._id%>" name="delete_product">×</a>
+        <h4><c data-type="text" data-url="/content_management/cargo" data-pk="<%=product._id%>" id="title" class="Ctitle" title="Наименование:"><%= product.title %></c></h4>
+        <h4>Тип: <c data-type="select" data-url="/content_management/cargo" data-pk="<%=product._id%>" id="type" class="Ctype" title="Тип:"><%= product.type %></c></h4>
+        <h4>
+            <c data-type="select" data-url="/content_management/cargo" data-pk="<%=product._id%>" id="dangerous" class="Cdangerous" title="Опасность:">
+                <%if(product.dangerous){%>Опасен<%}else{%>Безопасен<%}%>
+            </c>
+        </h4>
+    </div>
+</div>

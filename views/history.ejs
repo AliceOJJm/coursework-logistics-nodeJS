@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing" id="history_container">
+            <% if(total.length == 0 && planning.length == 0 && transportation.length == 0){%>
+                <h3 align = "center">Архив проведённых операций пуст</h3><br>
+            <% }else {%>
+                <h3 align = "center">Архив проведённых операций</h3><br>
+                <button type="button" class="btn btn-default" id="delete_history">Очистить архив</button>
+                <%if(total.length != 0){%>
+                    <h4 align = "center"><b>Расчёт общих издержек</b></h4><br>
+                <% for (var counter = 0; counter < total.length; counter ++){%>
+                    <% var operation = total[counter];%>
+                    <% include operation%>
+                <% }}%>
+                <br>
+                <%if(planning.length != 0){%>
+                    <h4 align = "center"><b>Планирование поставок</b></h4><br>
+                <% for (var counter = 0; counter < planning.length; counter ++){%>
+                    <% var operation = planning[counter];%>
+                    <% include operation%>
+                <% }}%>
+                <br>
+                <%if(transportation.length != 0){%>
+                    <h4 align = "center"><b>Планирование транспортировки грузов</b></h4><br>
+                <% for (var counter = 0; counter < transportation.length; counter ++){%>
+                    <% var operation = transportation[counter];%>
+                    <% include operation%>
+                <% }}%>
+            <%}%>
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+</body>
+</html>

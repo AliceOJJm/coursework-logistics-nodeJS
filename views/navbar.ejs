@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Система расчёта издержек">
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>Система расчёта издержек</title>
+    <link href="/stylesheets/Bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/stylesheets/Bootstrap/fonts/font-awesome.css" rel="stylesheet" media="screen">
+    <script src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/jquery.validate.js"></script>
+    <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/googleMaps.js"></script>
+    <link rel="stylesheet" href="/stylesheets/morris.css">
+    <script src="/javascripts/morris.js"></script>
+    <script src="/javascripts/raphael.js"></script>
+    <link href="/javascripts/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="/javascripts/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-brand">
+            <img src="/images/icon.png" alt="" style="width: 80px; padding-bottom: 10px;">
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Система расчёта логистических издержек</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
+                    <% if (firm){ %>
+                    <li><a href="/profile"><%= firm.local.title%></a></li>
+                    <li><a href="/logout">Выход</a></li>
+                    <% } else {%>
+                    <li><a data-toggle="modal" data-target=".bs-modal-sm">Вход</a></li>
+                    <li><a href="/signup">Регистрация</a></li>
+                    <% } %>
+                </ul>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<nav class="navbar navbar-inverse second-navbar">
+    <div class="container">
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Главная</a></li>
+                <li><a href="/about">О транспортной логистике</a></li>
+                <% if (firm && firm.local.is_admin){ %>
+                    <li><a href="/content_management">Управление контентом</a></li>
+                <% } %>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Расчёт и планирование<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/total_costs">Общие логистические издержки</a></li>
+                        <li><a href="/planning_supplies/about">Оптимальный размер поставки</a></li>
+                        <li><a href="/transportation/about">Транспортировка грузов</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <% if (firm){ %>
+            <ul class="nav navbar-nav navbar-right second-navbar-right">
+                <li><a href="/history">История расчётов</a></li>
+            </ul>
+            <% } %>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="modal fade bs-modal-sm" id="myModal" role = "dialog" aria-labelledby = "mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:35%;">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h1 align="center"><span class="glyphicon glyphicon-log-in"></span> Войти в аккаунт</h1>
+            </div>
+            <div class="modal-body">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="signin">
+                        <div id = "login_error" class="alert alert-danger disp"></div>
+                        <form id = "login_form" class="toggleForm">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" name="email" id = "email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Пароль</label>
+                                <input type="password" class="form-control" name="password" id = "password" required>
+                            </div>
+
+                            <button type="button" class="btn btn-warning btn-lg" id="submit_login">Войти</button>
+                        </form>
+
+                        <hr>
+                        <p><a href="/signup">Зарегистрироваться</a></p>
+                        <p><a href="/">Домашняя страница</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

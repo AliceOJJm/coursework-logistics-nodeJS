@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body onload="createChart();">
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing" id="history_container">
+            <div class="panel panel-default chart">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-calendar"></i> Статистика проведённых операций
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="operations_chart" style="height: 250px;"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <div class="panel panel-default chart">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-user"></i> Зарегистрированные фирмы
+                </div>
+                <div class="panel-body">
+                    <div id="users_chart" style="height: 250px;"></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Регистрация аккаунта</title>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container">
+
+            <div class="col-sm-6 col-sm-offset-3">
+
+                <h1><span class="glyphicon glyphicon-new-window"></span> Регистрация аккаунта</h1>
+
+                <!-- show any messages that come back with authentication -->
+                <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+                <% } %>
+                <% if (errors.length != 0) { %>
+                <div class="alert alert-danger">
+                    <ul><% for(var errorCounter = 0; errorCounter < errors.length; errorCounter ++){%>
+                        <li><%= errors[errorCounter].msg %>
+                            <% } %>
+                    </ul>
+                </div>
+                <% } %>
+
+                <!-- LOGIN FORM -->
+                <form action="/signup" method="post" data-toggle="validator">
+                    <div class="form-group">
+                        <label>Название фирмы</label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" class="form-control" name="password" data-minlength="6" required>
+                        <span class="help-block with-errors">От 6 до 20 символов</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Доверенное лицо</label>
+                        <input type="text" class="form-control" name="proxy" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Род деятельности фирмы</label>
+                        <input type="text" class="form-control" name="line" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Регистрационный номер</label>
+                        <input type="text" class="form-control" name="registration_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес</label>
+                        <input type="text" class="form-control" name="headquarters" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="text" class="form-control" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Факс</label>
+                        <input type="text" class="form-control" name="fax">
+                    </div>
+                    <div class="form-group">
+                        <label>Дополнительная информация</label>
+                        <textarea name="description" class="form-control" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg">Зарегистрировать</button>
+                </form>
+                <hr>
+
+
+            </div>
+
+        </div>
+
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+
+    </div>
+</div>
+</body>
+</html>

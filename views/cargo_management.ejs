@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container" id="products_container">
+        <div class="container marketing">
+            <% if(products.length == 0){%>
+            <h3 align = "center">В базе нет ни одного вида груза.</h3><br>
+            <button type="button" class="btn btn-default" id="add_product">+ Добавить</button>
+            <% }else {%>
+            <h3 align = "center">Список типов продуктов</h3><br>
+            <button type="button" class="btn btn-default" id="add_product">+ Добавить</button>
+            <h4 align = "center"><b></b></h4><br>
+            <% for (var counter = 0; counter < products.length; counter ++){%>
+            <% var product = products[counter];%>
+            <% include product%>
+            <% }}%>
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="productModal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:35%;">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2 align="center">Добавление нового вида продукта</h2>
+            </div>
+            <div class="modal-body">
+                <form id = "addProduct" class="toggleForm">
+                    <div class="form-group">
+                        <label>Наименование:</label>
+                        <input type="text" class="form-control" name="title" id="Ptitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Тип:</label>
+                        <div class="input-group">
+                            <select class="form-control" name="cargo_type" id="Ptype">
+                                <option value = "универсальные">универсальные</option>
+                                <option value = "хрупкие">хрупкие</option>
+                                <option value = "очень хрупкие">очень хрупкие</option>
+                                <option value = "насыпные">насыпные</option>
+                                <option value = "навалочные">навалочные</option>
+                                <option value = "наливные">наливные</option>
+                                <option value = "прод. питания">прод. питания</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Опасен&nbsp;&nbsp;</label>
+                        <input type="checkbox" id="is_dangerous">
+                    </div>
+                    <button type="button" id = "submitAddProduct" class="btn btn-warning btn-lg">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

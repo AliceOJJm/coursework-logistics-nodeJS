@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq9LTlogYSqIfBgt8taharWcgeGBHrCdQ&sensor=true">
+    </script>
+</head>
+<body onload="initialize()">
+<% include navbar %>
+<script type="text/javascript">
+
+</script>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing">
+            <h3 align = "center">Планирование транспортировки грузов</h3><br>
+                <form action="/transportation" method="post" data-toggle="validator">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Выберите тип груза:</label>
+                            <select class="form-control" id="cargo_type">
+                                <% for (var counter = 0; counter < products.length; counter ++){%>
+                                    <option><%= products[counter].title%></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Выберите вес и объём груза:</label>
+                            <select class="form-control" id="dimensions">
+                                <option value="0.1,0.5">до 100кг, до 0.5куб</option>
+                                <option value="0.2,2">до 200кг, до 2куб</option>
+                                <option value="0.3,5">до 300кг, до 5куб</option>
+                                <option value="0.5,15">до 500кг, до 15куб</option>
+                                <option value="1,20">до 1т, до 20куб</option>
+                                <option value="2,25">до 2т, до 25куб</option>
+                                <option value="3,30">до 3т, до 30куб</option>
+                                <option value="5,45">до 5т, до 45куб</option>
+                                <option value="7,50">до 7т, до 50куб</option>
+                                <option value="10,82">до 10т, до 82куб</option>
+                                <option value="15,86">до 15т, до 86куб</option>
+                                <option value="20,90">до 20т, до 90куб</option>
+                                <option value="22,120">до 22т, до 120куб</option>
+                                <option value="24,негабарит">до 24т, негабарит</option>
+                                <option value="25,негабарит">до 20т, негабарит</option>
+                                <option value="30,негабарит">до 20т, негабарит</option>
+                                <option value="35,негабарит">до 20т, негабарит</option>
+                                <option value="50,жд">до 50т, для ж/д перевозок</option>
+                                <option value="100,жд">до 100т, для ж/д перевозок</option>
+                                <option value="150,жд">до 150т, для ж/д перевозок</option>
+                                <option value="250,жд">до 250т, для ж/д перевозок</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Дополнительная информация о поставке:</label>
+                            <textarea name="description" class="form-control" rows="4"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-warning btn-lg" id="submit_transportation">Рассчитать</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Выберите страну отправления:</label>
+                            <select class="form-control" name = "origin_country" id = "origin_country">
+                                <% for (var counter in countries){ %>
+                                    <option><%= countries[counter].title %></option>
+                                <% }%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Выберите город отправления:</label>
+                            <% for (var counter in countries){ %>
+                            <select class="form-control" name = "origin_city" id = "<%=countries[counter].title%>">
+                                <% for (var iterator in cities){ if(cities[iterator].country_id.equals(countries[counter]._id)){%>
+                                <option><%= cities[iterator].title %></option>
+                                <% }}%>
+                            </select>
+                            <% }%>
+                        </div>
+                        <div class="form-group">
+                            <label>Выберите страну назначения:</label>
+                            <select class="form-control" id="destination_country">
+                                <% for (var counter in countries){ %>
+                                <option><%= countries[counter].title %></option>
+                                <% }%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Выберите город назначения:</label>
+                            <% for (var counter in countries){ %>
+                            <select class="form-control" name = "destination_city" id = "d_<%=countries[counter].title%>">
+                                <% for (var iterator in cities){ if(cities[iterator].country_id.equals(countries[counter]._id)){%>
+                                <option><%= cities[iterator].title %></option>
+                                <% }}%>
+                            </select>
+                            <% }%>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div id="map_canvas" style="width:100%; height:350px"></div>
+                        <div id="directionsPanel"></div>
+                    </div>
+                </form>
+        </div>
+            <!-- FOOTER -->
+            <footer>
+                <!--p class="pull-right"><a href="#">Back to top</a></p-->
+                <p>&copy; 2015</p>
+            </footer>
+            <!-- /.container -->
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="resultsModal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2>Результаты расчётов</h2>
+            </div>
+            <div class="modal-body">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in">
+                        <div class="alert alert-warning">Расчёт сохранён в <a href="/history">истории</a>.</div>
+                        <hr>
+                        <div id="results_area" class="results">
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing">
+            <form data-toggle="validator" id="planning">
+                <div class="col-lg-4">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label>Введите годовой объём поставок:</label>
+                            <input type="text" class="form-control" name="Q" id="Q" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Ед. измерения:</label>
+                            <select class="form-control" name="units" id="units">
+                                <option value = "кг">кг</option>
+                                <option value = "т">т</option>
+                                <option value = "шт">шт</option>
+                                <option value = "литр">литр</option>
+                                <option value = "м3">м<sup><small>3</small></sup></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введите цену единицы товара:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name = "p" id = "p" required>
+                            <span class="input-group-addon"><span><b>$/<i>кг</i></b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Дополнительная информация:</label>
+                        <textarea id="description" class="form-control" rows="6"></textarea>
+                    </div>
+                    <br>
+                    <% if(firm){%>
+                    <input type="hidden" id="firm" value = "true">
+                    <%} else{%>
+                    <input type="hidden" id="firm" value = "false">
+                    <%}%>
+                    <div class="col-lg-5">
+                        <button type="button" id = "submit_planning" class="btn btn-warning btn-lg">Рассчитать</button>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="order_point">Рассчитать точку заказа</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="order_dates">Рассчитать даты поставок</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Введите долю затрат на хранение товара:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="m" id="m" required>
+                            <span class="input-group-addon"><span><b>&nbsp;%&nbsp;</b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете величину постоянных затрат:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="K" id="K" required>
+                            <span class="input-group-addon"><span><b>&nbsp;$&nbsp;</b></span></span>
+                        </div>
+                    </div>
+                    <span class="help-block with-errors">Включают расходы на оформление заказа, транспортно-заготовительные расходы, содержание и эксплуатацию складов, повременную заработную плату и т.д.</span>
+                    <div class="form-group disp" id="order_d">
+                        <label>Запас на данный момент:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="I" id="I" required>
+                            <span class="input-group-addon"><span><b><i>кг</i>&nbsp;</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" id ="order_p">
+                    <div class="form-group">
+                        <label>Введете длительность страхового запаса (в днях):</label>
+                        <input type="text" class="form-control" name="d" id="d" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете срок поставки (в днях):</label>
+                        <input type="text" class="form-control" name="T" id="T" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете дневной объём потребления:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="O" id="O" required>
+                            <span class="input-group-addon"><span><b><i>кг</i>/день&nbsp;</b></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="resultsModal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2>Результаты расчётов</h2>
+            </div>
+            <div class="modal-body">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in">
+                        <div class="alert alert-warning">Расчёт сохранён в <a href="/history">истории</a>.</div>
+                        <hr>
+                        <div id="results_area" class="results">
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

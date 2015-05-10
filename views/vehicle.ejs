@@ -1,0 +1,16 @@
+<div class="panel panel-default" id="editVehicle">
+    <div class="panel-heading">
+        <a class="close" id="<%=vehicle._id%>" name="delete_vehicle">×</a>
+        <h4><c data-type="text" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="title" class="title" title="Название:"><%= vehicle.title%></c></h4>
+    </div>
+    <div class="panel-body">
+        <h4>Тип: <c data-type="select" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="type" class="type" title="Вид транспорта:"><%= vehicle.type %></c></h4>
+        <h4>Допустимые грузы: <c data-type="select" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="cargo_type" class="cargo_type" title="Вид груза:"><%= vehicle.cargo_type %></c></h4>
+        <h4>Грузоподъёмность: <c data-type="text" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="capacity" class="capacity" title="Грузоподьёмность:"><%= vehicle.capacity %></c> т</h4>
+        <h4>Вместительность: <c data-type="text" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="cargo_volume" class="cargo_volume" title="Вместительность:"><%= vehicle.cargo_volume %></c> т</h4>
+        <h4>Надбавочная стоимость: <c data-type="text" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="tax_addon" class="tax_addon" title="Надбавочная стоимость:"><%= vehicle.tax_addon %></c> $/км</h4>
+    </div>
+    <div class="panel-footer">
+        <h4>Подробности: <c data-type="textarea" data-url="/content_management/transport" data-pk="<%=vehicle._id%>" id="additional" class="additional" title="Описание:"><%= vehicle.additional %></h4>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing">
+            <h3 align = "center">Расчёт годовых логистических затрат на транспортирование и хранение товара</h3><br>
+            <div class="alert alert-warning disp fit" id="invintation"><a href="/signup"  class="alert-link">Зарегестрируйтесь</a>&nbsp;&nbsp;для того, чтобы сохранять расчёты в архив и получить доступ к многочисланным полезным сервисам.</div>
+            <form id = "total_costs">
+                <div class="col-lg-4">
+                    <div class="col-lg-8">
+                    <div class="form-group">
+                        <label>Введите годовой объём поставок:</label>
+                        <input type="text" class="form-control" name="Q" id="Q" required>
+                    </div>
+                    </div>
+                    <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Ед. измерения:</label>
+                        <select class="form-control" name="units" id="units">
+                            <option value = "кг">кг</option>
+                            <option value = "т">т</option>
+                            <option value = "шт">шт</option>
+                            <option value = "литр">литр</option>
+                            <option value = "м3">м<sup><small>3</small></sup></option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введите тариф на перевозку товара:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="S" id="S" required>
+                            <span class="input-group-addon"><span><b>$/<i>кг</i></b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введите цену единицы товара:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name = "p" id = "p" required>
+                            <span class="input-group-addon"><span><b>$/<i>кг</i></b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Дополнительная информация:</label>
+                        <textarea id="description" class="form-control" rows="5"></textarea>
+                    </div>
+                    <br>
+                    <% if(firm){%>
+                        <input type="hidden" id="firm" value = "true">
+                    <%} else{%>
+                        <input type="hidden" id="firm" value = "false">
+                    <%}%>
+                    <button type="button" id = "submit_total_costs" class="btn btn-warning btn-lg">Рассчитать</button>
+                </div>
+                <div class="col-lg-4">
+                    <br>
+                    <div class="form-group">
+                        <label>Введите долю затрат на хранение товара:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="m" id="m" required>
+                            <span class="input-group-addon"><span><b>&nbsp;%&nbsp;</b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете средний объём поставки:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" id="q" required>
+                            <span class="input-group-addon"><span><b><i>кг</i></b></span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете время в пути (в днях):</label>
+                        <input type="text" class="form-control" name="t" id="t" required>
+                    </div>
+                    <br><br>
+                    <div class = "disp" id = "result_total_costs">
+                        <table><tr><td><img src = "images/summ.png" class = "summ_sign"></td>
+                                   <td><b class = "sum"><div id = "total_part"></div></b></td></tr></table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Введете длительность страхового запаса (в днях):</label>
+                        <input type="text" class="form-control" name="d" id="d" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Введете величину постоянных затрат:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="K" id="K" required>
+                            <span class="input-group-addon"><span><b>&nbsp;$&nbsp;</b></span></span>
+                        </div>
+                    </div>
+                    <span class="help-block with-errors">Включают расходы на оформление заказа, содержание и эксплуатацию складов, повременную заработную плату и т.д.</span>
+                    <br><br><br>
+                    <div class = "disp" id = "result_total_costs_part">
+                        <div id = "stock_part" class="sum"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

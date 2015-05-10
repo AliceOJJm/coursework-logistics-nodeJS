@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body>
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing">
+            <h3 align = "center">Планирование транспортировки грузов</h3><br>
+            <div class="alert alert-warning fit disp" id="invintation"><a href="/signup"  class="alert-link">Зарегестрируйтесь</a>&nbsp;&nbsp;для того, чтобы воспользоваться этим и другими полезными сервисами.</div>
+
+            <p>Сервис предназначен для выбора вида транспорта в соответствии и типом и габаритами груза, а так же для рассчёта налога на перевозку груза и моделирование маршрута.</p>
+            <form>
+                <% if(firm){%>
+                <input type="hidden" id="firm" value = "true">
+                <%} else{%>
+                <input type="hidden" id="firm" value = "false">
+                <%}%>
+            </form>
+            <button role="button" class="btn btn-warning btn-lg" id="to_transportation">Перейти к планированию</button>
+
+            <!-- FOOTER -->
+            <footer>
+                <br><br>
+                <p>&copy; 2015</p>
+            </footer>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+</body>
+</html>

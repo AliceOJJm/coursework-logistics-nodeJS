@@ -1,0 +1,92 @@
+.notFound{
+    width: 40%;
+    margin-top: 5%;
+    margin-left: 30%;
+}
+
+div.col-lg-8, div.col-lg-7, div.col-lg-3{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+div.col-lg-5{
+    padding-top: 10px;
+    padding-left: 0px;
+}
+
+div.col-lg-4{
+     padding-right: 0px;
+ }
+
+.input-group-addon:last-child{
+     margin: 0px;
+     padding-left: 3px;
+     padding-right: 3px;
+     padding-bottom: 0px;
+     padding-top: 0px;
+ }
+
+.sum{
+    font-size: 19px;
+}
+
+.results{
+    font-size: 17px;
+}
+
+.res_span{
+    font-size: 15px;
+}
+
+.summ_sign{
+    width: 100px;
+    margin-left: 60px;
+}
+
+.disp, div.adp{
+	display: none;
+}
+
+.error-class{
+    color: orange;
+}
+
+.fit{
+    width: 85%;
+    margin: auto;
+}
+
+.graph{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chart{
+    display: inline-block;
+    width: 49.7%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toggleForm {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.size_circle{
+   margin-left: 20%;
+   width: 200px;
+   height: 200px;
+}
+
+body{
+    background-image: url(../images/bg.jpg);
+}

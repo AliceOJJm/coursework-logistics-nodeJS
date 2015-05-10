@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a class="close" id="<%=operation._id%>" name="delete_operation">×</a>
+        <h4>Входные данные: <%= operation.parameters %></h4>
+    </div>
+    <div class="panel-body">
+        <h4>Результаты: <%= operation.results %></h4>
+    </div>
+    <div class="panel-footer">
+        <h4>Операция была проведена <%= formatDate(operation.created_at) %></h4>
+        <% if(operation.additional) {%>
+            <h4>Подробности: <%= operation.additional %></h4>
+        <%}%>
+    </div>
+</div>
