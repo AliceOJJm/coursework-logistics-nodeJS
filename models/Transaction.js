@@ -90,10 +90,10 @@ Transaction.prototype.totalCosts = function(request, firm, send) {
 };
 
 Transaction.prototype.planningSupplies = function(request, firm, send) {
-    var K = request.K;
-    var Q = request.Q;
-    var m = request.m;
-    var p = request.p;
+    var K = parseFloat(request.K);
+    var Q = parseFloat(request.Q);
+    var m = parseFloat(request.m);
+    var p = parseFloat(request.p);
     var units = request.units;
     var q = Math.sqrt((2 * K * Q) / (m * p));
     var L = Math.sqrt((2 * K * Q * m * p));
@@ -102,15 +102,15 @@ Transaction.prototype.planningSupplies = function(request, firm, send) {
     var results = "  Размер партии: " + q.toFixed(2) + " (" + units + ")" + " Затраты на управление запасами - " + L.toFixed(2) + "$";
     var results_html = 'Рекомендуемыый размер партии: ' + q.toFixed(2) + " (" + units + ")<br> Затраты на управление запасами: "  + L.toFixed(2) + "$<br>";
     if (request.order_point == "true" || request.order_dates == "true") {
-        var T = request.T;
-        var O = request.O;
-        var d = request.d;
+        var T = parseFloat(request.T);
+        var O = parseFloat(request.O);
+        var d = parseFloat(request.d);
         var r = O * (T + d);
         params = params + "  Время в пути(в днях): " + T + "  Длительность страхового завпаса(в днях): " + d + " Дневное потребление: " + O + units + "/день";
         results = results + "  Точка заказа: " + r.toFixed(2) + " (" + units + ")";
         results_html = results_html + "  Точка заказа: " + r.toFixed(2) + " (" + units + ")<br>";
         if (request.order_dates == "true"){
-            var I = request.I;
+            var I = parseFloat(request.I);
             params = params + "  Стартовый запас: " + I + units;
             var t1 = (I - r)/O;
             if(t1 < 0) t1 = 0;
@@ -120,8 +120,11 @@ Transaction.prototype.planningSupplies = function(request, firm, send) {
             var I2 = I1 - (t2 - t1 + T) * O + q;
             var t3 = t2 + T +(I2 - r)/O;
             if(t3 < 0) t3 = 0;
-            results = results + "  Первый заказ: " + getSupplyDate(t1.toFixed(0)) + "  Второй - " + getSupplyDate(t2.toFixed(0)) + "  Третий - " + getSupplyDate(t3.toFixed(0));
-            results_html = results_html + " <br>Интервал времени между заказами при условии соблюдения оптимальной партии поставки.<br> Первый заказ: " + getSupplyDate(t1.toFixed(0)) + "<br>  Второй - " + getSupplyDate(t2.toFixed(0)) + "<br>  Третий - " + getSupplyDate(t3.toFixed(0)) + "<br>";
+            var date1 = getSupplyDate(t1);
+            var date2 = getSupplyDate(t2);
+            var date3 = getSupplyDate(t3);
+            results = results + "  Первый заказ: " + date1 + "  Второй - " + date2 + "  Третий - " + date3;
+            results_html = results_html + " <br>Интервал времени между заказами при условии соблюдения оптимальной партии поставки.<br> Первый заказ: " + date1 + "<br>  Второй - " + date2 + "<br>  Третий - " + date3 + "<br>";
         }
     }
     var t = new Transaction("planning");
@@ -131,6 +134,13 @@ Transaction.prototype.planningSupplies = function(request, firm, send) {
     Firm.update({_id: firm._id}, query, function (err) {});
     var result = {results_html: results_html};
     send(result);
+};
+
+function getSupplyDate(days){
+    var date = new Date(Date.now() + days*24*3600*1000);
+    var result = "";
+    result += date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + "г.";
+    return result;
 };
 
 module.exports = Transaction;

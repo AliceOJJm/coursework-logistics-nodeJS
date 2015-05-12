@@ -100,3 +100,27 @@ div.col-lg-4{
 body{
     background-image: url(../images/bg.jpg);
 }
+
+.index{
+    background: url(../images/downloads-bg.jpg);
+}
+
+.bg{
+    background: url(../images/news-bg1.jpg);
+}
+
+.reg-bg{
+    background: url(../images/reg-bg.jpg);
+}
+
+.log-bg{
+    background: url(../images/sign.jpg);
+}
+
+.inline{
+    display: inline-block;
+}
+
+.right_btn{
+    margin-left: 78%;
+}

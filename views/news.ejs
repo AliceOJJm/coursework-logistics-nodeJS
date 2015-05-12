@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+</head>
+<body class="bg">
+<% include navbar %>
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="container marketing" id="news_container">
+            <%if(news.length != 0){%>
+            <h4 align = "center"><b>Новости в мире логистики</b></h4><br>
+            <%if(firm && firm.local.is_admin){%>
+            <button type="button" class="btn btn-default" id="add_news">+ Добавить</button>
+            <h4 align="center"><b></b></h4>
+            <%}%>
+            <% for (var counter = 0; counter < news.length; counter ++){%>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 class="inline" id="title_<%=news[counter]._id%>"><%= news[counter].title%></h4>
+                        <button type="button" class="btn btn-default inline right_btn" name="show_news" id="<%=news[counter]._id%>">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true">&nbsp; Подробнее</span>
+                        </button>
+                        <div class="disp" id="text_<%=news[counter]._id%>"><%= news[counter].text%></div>
+                    </div>
+                    <div class="panel-footer">
+                        <h4>Автор: <%= news[counter].author %></h4>
+                    </div>
+                </div>
+            <% }}else{%>
+                <h4 align = "center"><b>Нет новостей</b></h4><br>
+                <%if(firm && firm.local.is_admin){%>
+                <button type="button" class="btn btn-default" id="add_news">+ Добавить</button>
+                <%}%>
+            <%}%>
+
+        </div><!-- /.container -->
+    </div>
+</div>
+
+
+<div class="modal fade bs-modal-sm" id="add_news_modal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog"  style="width:70%;">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2 align="center">Создание новости</h2>
+            </div>
+            <div class="modal-body">
+                <form id = "addNews" class="toggleForm">
+                    <div class="form-group">
+                        <label>Название:</label>
+                        <input type="text" class="form-control" name="title" id="titleNews" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Содержание:</label>
+                        <textarea id="textNews" class="form-control" rows="13"></textarea>
+                    </div>
+                    <button type="button" id = "submit_add_news" class="btn btn-warning btn-lg">Опубликовать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="show_news_modal" role = "dialog" aria-hidden="true">
+    <div class="modal-dialog"  style="width:70%;">
+        <div class="modal-content">
+            <br>
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h2 align='center' id="itemTitle"></h2>
+                <%if(firm && firm.local.is_admin){%>
+                <button type="button" class="btn btn-default" name="edit_news"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Редактировать</button>
+                <button type="button" class="btn btn-default" name="delete_news"><span class="glyphicon glyphicon-remove"></span>&nbsp;Удалить</button>
+                <h4 align="center"><b></b></h4>
+                <%}%>
+            </div>
+            <div class="modal-body">
+                    <p id="itemText"></p>
+                    <div id="itemId" class="disp"></div>
+                <form id = "editNews" class="toggleForm disp">
+                    <div class="form-group">
+                        <label>Название:</label>
+                        <input type="text" class="form-control" name="title" id="titleNewsE" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Содержание:</label>
+                        <textarea id="textNewsE" class="form-control" rows="13"></textarea>
+                    </div>
+                    <button type="button" id = "submit_edit_news" class="btn btn-warning btn-lg">Опубликовать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

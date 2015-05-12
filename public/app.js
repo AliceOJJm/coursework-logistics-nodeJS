@@ -1,7 +1,9 @@
 /**
  * Created by acer on 27.04.2015.
  */
-$( document ).ready(function() {
+
+$( document ).ready(loadHandlers);
+$( document ).ready(function(){
     $("#order_p").fadeToggle(0);
     $("#order_d").fadeOut(0);
     $("#firms_table").DataTable( {
@@ -29,6 +31,11 @@ $( document ).ready(function() {
             }
         }
     });
+});
+
+$(document).ajaxComplete(loadHandlers);
+
+function loadHandlers() {
     $( ".size_circle" ).mouseover(function() {
         $( this ).animate({"height": "220px", "width": "220px", "margin-left": "17%"}, 300);
     });
@@ -179,6 +186,24 @@ $( document ).ready(function() {
         }
     });
 
+    $("#submit_edit_news").on('click', function() {
+        if ($('#editNews').valid()) {
+            $.ajax({
+                url: '/news',
+                type: 'PUT',
+                data: {id: $("#itemId").text(), title: $("#titleNewsE").val(), text: $("#textNewsE").val()},
+                success: function(result) {
+                    $("#news_container").load("/news #news_container");
+                    $('#itemText').text($("#textNewsE").val());
+                    $('#itemTitle').text($("#titleNewsE").val());
+                    $("#editNews").addClass('disp');
+                    $("#itemTitle").removeClass('disp');
+                    $("#itemText").removeClass('disp');
+                }
+            });
+        }
+    });
+
     $('#addVehicle').validate({
         errorClass: "error-class",
         rules: {
@@ -307,11 +332,11 @@ $( document ).ready(function() {
         if ($('#planning').valid()) {
             var parameters = {Q: parseInt($("#Q").val()), m: (parseInt($("#m").val()) / 100), p: parseInt($("#p").val()), K: parseInt($("#K").val()), units: $("#units").val(), additional: $("#description").val(), order_point: $('#order_point').is(':checked'), order_dates: $('#order_dates').is(':checked')};
             if ($('#order_point').is(':checked') || $('#order_dates').is(':checked')) {
-                parameters[T] = parseInt($("#T").val());
-                parameters[O] = parseInt($("#O").val());
-                parameters[d] = parseInt($("#d").val());
+                parameters['T'] = parseInt($("#T").val());
+                parameters['O'] = parseInt($("#O").val());
+                parameters['d'] = parseInt($("#d").val());
                 if ($('#order_dates').is(':checked')) {
-                    parameters[I] = parseInt($("#I").val());
+                    parameters['I'] = parseInt($("#I").val());
                 }
             }
             $.post('/planning_supplies', parameters, function (data) {
@@ -325,8 +350,16 @@ $( document ).ready(function() {
         $('#vehicleModal').modal('show');
     });
 
+    $("#add_news").on('click', function(){
+        $('#add_news_modal').modal('show');
+    });
+
     $("#add_product").on('click', function(){
         $('#productModal').modal('show');
+    });
+
+    $("#login").on('click', function(){
+        $('#myModal').modal('show');
     });
 
     $("#submitAddVehicle").on('click', function() {
@@ -335,6 +368,16 @@ $( document ).ready(function() {
             $.post('/content_management/transport', parameters, function (data) {
                 $("#vehicles_container").load("/content_management/transport #vehicles_container");
                 $('#vehicleModal').modal('hide');
+            });
+        }
+    });
+
+    $("#submit_add_news").on('click', function() {
+        if ($('#addNews').valid()) {
+            var parameters = {title: $("#titleNews").val(), text: $("#textNews").val()};
+            $.post('/news', parameters, function (data) {
+                $("#news_container").load("/news #news_container");
+                $('#add_news_modal').modal('hide');
             });
         }
     });
@@ -360,10 +403,38 @@ $( document ).ready(function() {
         });
      });
 
+    $("button[name='delete_news']").on('click', function() {
+        $.ajax({
+            url: '/news',
+            type: 'DELETE',
+            data: {id: $("#itemId").text()},
+            success: function(result) {
+                $("#news_container").load("/news #news_container");
+                $('#show_news_modal').modal('hide');
+            }
+        });
+     });
+
+    $("button[name='edit_news']").on('click', function() {
+        $("#itemTitle").addClass('disp');
+        $("#itemText").addClass('disp');
+        $("#titleNewsE").attr('value', $("#itemTitle").text());
+        $("#textNewsE").text($("#itemText").text());
+        $("#editNews").removeClass('disp');
+     });
+
     $("a[name='delete_operation']").on('click', function() {
         $.post('/history', {id: $(this).attr("id")}, function (data){
             $("#history_container").load("/history #history_container");
         });
+    });
+
+
+    $("button[name='show_news']").on('click', function(){
+        $('#itemText').text($("#text_" + $(this).attr('id')).text());
+        $('#itemTitle').text($("#title_" + $(this).attr('id')).text());
+        $('#itemId').text($(this).attr('id'));
+        $('#show_news_modal').modal('show');
     });
 
     $("a[name='delete_product']").on('click', function() {
@@ -387,157 +458,7 @@ $( document ).ready(function() {
             }
         });
     });
-});
-
-$(document).ajaxComplete(function(){
-
-    $("#delete_history").on('click', function() {
-        $.ajax({
-            url: '/history',
-            type: 'DELETE',
-            success: function(result) {
-                $("#history_container").load("/history #history_container");
-            }
-        });
-    });
-
-    $("a[name='delete_operation']").on('click', function() {
-        $.post('/history', {id: $(this).attr("id")}, function (data){
-            $("#history_container").load("/history #history_container");
-        });
-    });
-
-    $("a[name='delete_vehicle']").on('click', function() {
-        $.ajax({
-            url: '/content_management/transport',
-            type: 'DELETE',
-            data: {id: $(this).attr("id")},
-            success: function(result) {
-                $("#vehicles_container").load("/content_management/transport #vehicles_container");
-            }
-        });
-    });
-
-    $("#submitAddVehicle").on('click', function() {
-        if ($('#addVehicle').valid()) {
-            var parameters = {title: $("#title").val(), type: $("#type").val(), capacity: $("#capacity").val(), cargo_volume: $("#cargo_volume").val(), cargo_type: $("#cargo_type").val(), tax_addon: $("#tax_addon").val(), additional: $("#description").val()};
-            $.post('/content_management/transport', parameters, function (data) {
-                $("#vehicles_container").load("/content_management/transport #vehicles_container");
-                $('#vehicleModal').modal('hide');
-            });
-        }
-    });
-
-    $("#add_vehicle").on('click', function(){
-        $('#vehicleModal').modal('show');
-    });
-
-    $('.title').editable('option','validate', function(value) {
-            if(/^$|^\s+/.test($.trim(value))) {
-                return 'Введите число';
-            }
-        }
-    );
-    $('.type').editable({
-        source: [
-            {value: 'автомобильный', text: 'автомобильный'},
-            {value: 'железнодорожный', text: 'железнодорожный'}
-        ]
-    });
-
-    //$('.cargo_type').editable();
-
-    $('.capacity').editable('option','validate', function(value) {
-            if(!(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/.test($.trim(value)))) {
-                return 'Обязательное поле';
-            }
-        }
-    );
-
-    $('.cargo_volume').editable('option','validate', function(value) {
-            if(!(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/.test($.trim(value)))) {
-                return 'Введите число';
-            }
-        }
-    );
-    $('.additional').editable();
-    $('.tax_addon').editable('option','validate', function(value) {
-            if(!(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/.test($.trim(value)))) {
-                return 'Введите число';
-            }
-        }
-    );
-
-    $("a[name='delete_product']").on('click', function() {
-        $.ajax({
-            url: '/content_management/cargo',
-            type: 'DELETE',
-            data: {id: $(this).attr("id")},
-            success: function(result) {
-                $("#products_container").load("/content_management/cargo #products_container");
-            }
-        });
-    });
-
-    $("#add_product").on('click', function(){
-        $('#productModal').modal('show');
-    });
-
-    $('.Ctype').editable({
-        source: [
-            {value: 'универсальные', text: 'универсальные'},
-            {value: 'хрупкие', text: 'хрупкие'},
-            {value: 'очень хрупкие', text: 'очень хрупкие'},
-            {value: 'навалочные', text: 'навалочные'},
-            {value: 'наливные', text: 'наливные'},
-            {value: 'хрупкие', text: 'хрупкие'},
-            {value: 'прод. питания', text: 'прод. питания'}
-        ]
-    });
-
-    $('.Ctitle').editable('option', 'source', function(){
-        if(/^$|^\s+/.test($.trim(value))) {
-            return 'Обязательное поле';
-        }
-    });
-
-    $('.Cdangerous').editable({
-            source: [
-                {value: true, text: 'опасен'},
-                {value: false, text: 'безопасен'}
-            ]
-        }
-    );
-
-    $("#submitAddProduct").on('click', function() {
-        var parameters = {title: $("#Ptitle").val(), type: $("#Ptype").val()};
-        if ($('#is_dangerous').is(':checked')) {
-            parameters["dangerous"] = true;
-        }
-        $.post('/content_management/cargo', parameters, function (data) {
-            $("#products_container").load("/content_management/cargo #products_container");
-            $('#productModal').modal('hide');
-        });
-    });
-
-    $('#login_form').validate({
-        errorClass: "error-class"
-    });
-
-    $("#submit_login").on('click',function() {
-        if ($('#login_form').valid()) {
-            $.post('/login', {email: $("#email").val(), password: $("#password").val()}, function (data) {
-                if(data.message) {
-                    $("#login_error").text(data.message);
-                    $("#login_error").removeClass("disp");
-                }
-                else{
-                    window.location.pathname = "/profile";
-                }
-            });
-        }
-    });
-});
+}
 
 function createChart(){
     $.get('/content_management/chart_data', function (res) {
@@ -557,10 +478,3 @@ function createChart(){
         });
     });
 }
-
-function getSupplyDate(days){
-    var date = new Date(Date.now() + days*24*3600*1000);
-    var result = "";
-    result += date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + "г.";
-    return result;
-};
