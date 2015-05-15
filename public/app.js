@@ -31,6 +31,18 @@ $( document ).ready(function(){
             }
         }
     });
+    $("#submitAddVehicle").on('click', function() {
+        if ($('#addVehicle').valid()) {
+            var parameters = {title: $("#title_").val(), type: $("#type_").val(),
+                capacity: $("#capacity_").val(), cargo_volume: $("#cargo_volume_").val(),
+                cargo_type: $("#cargo_type_").val(), tax_addon: $("#tax_addon_").val(),
+                additional: $("#description_").val()};
+            $.post('/content_management/transport', parameters, function (data) {
+                $("#vehicles_container").load("/content_management/transport #vehicles_container");
+                $('#vehicleModal').modal('hide');
+            });
+        }
+    });
 });
 
 $(document).ajaxComplete(loadHandlers);
@@ -191,11 +203,12 @@ function loadHandlers() {
             $.ajax({
                 url: '/news',
                 type: 'PUT',
-                data: {id: $("#itemId").text(), title: $("#titleNewsE").val(), text: $("#textNewsE").val()},
+                data: {id: $("#itemId").text(), title: $("#titleNewsE").val(), text: $("#textNewsE").val(), url: $("#urlNewsE").val()},
                 success: function(result) {
                     $("#news_container").load("/news #news_container");
                     $('#itemText').text($("#textNewsE").val());
                     $('#itemTitle').text($("#titleNewsE").val());
+                    $('#itemURL').html("<img src='" + $("#urlNewsE").val() + "' class='newsimg' />");
                     $("#editNews").addClass('disp');
                     $("#itemTitle").removeClass('disp');
                     $("#itemText").removeClass('disp');
@@ -301,8 +314,10 @@ function loadHandlers() {
             window.location.pathname = "/planning_supplies";
         }
         else{
+            $("#invintation").hide();
             $("#invintation").removeClass("disp");
-            window.location.pathname = "/planning_supplies/about";
+            $("#invintation").show(800);
+            $('html, body').animate({scrollTop: '0px'}, 800);
         }
     });
 
@@ -311,7 +326,10 @@ function loadHandlers() {
             window.location.pathname = "/transportation";
         }
         else{
+            $("#invintation").hide();
             $("#invintation").removeClass("disp");
+            $("#invintation").show(800);
+            $('html, body').animate({scrollTop: '0px'}, 800);
         }
     });
 
@@ -362,19 +380,9 @@ function loadHandlers() {
         $('#myModal').modal('show');
     });
 
-    $("#submitAddVehicle").on('click', function() {
-        if ($('#addVehicle').valid()) {
-            var parameters = {title: $("#title_").val(), type: $("#type_").val(), capacity: $("#capacity_").val(), cargo_volume: $("#cargo_volume_").val(), cargo_type: $("#cargo_type_").val(), tax_addon: $("#tax_addon_").val(), additional: $("#description_").val()};
-            $.post('/content_management/transport', parameters, function (data) {
-                $("#vehicles_container").load("/content_management/transport #vehicles_container");
-                $('#vehicleModal').modal('hide');
-            });
-        }
-    });
-
     $("#submit_add_news").on('click', function() {
         if ($('#addNews').valid()) {
-            var parameters = {title: $("#titleNews").val(), text: $("#textNews").val()};
+            var parameters = {title: $("#titleNews").val(), text: $("#textNews").val(), url: $("#urlNews").val()};
             $.post('/news', parameters, function (data) {
                 $("#news_container").load("/news #news_container");
                 $('#add_news_modal').modal('hide');
@@ -433,6 +441,7 @@ function loadHandlers() {
     $("button[name='show_news']").on('click', function(){
         $('#itemText').text($("#text_" + $(this).attr('id')).text());
         $('#itemTitle').text($("#title_" + $(this).attr('id')).text());
+        $('#itemURL').html("<img src='" + $("#url_" + $(this).attr('id')).text() + "' class='newsimg'/>");
         $('#itemId').text($(this).attr('id'));
         $('#show_news_modal').modal('show');
     });

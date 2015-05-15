@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 </head>
-<body class="bg">
+<body>
 <% include navbar %>
 <div class="navbar-wrapper">
     <div class="container">
@@ -16,11 +16,13 @@
             <% for (var counter = 0; counter < news.length; counter ++){%>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h4 class="inline" id="title_<%=news[counter]._id%>"><%= news[counter].title%></h4>
-                        <button type="button" class="btn btn-default inline right_btn" name="show_news" id="<%=news[counter]._id%>">
+                        <button type="button" class="btn btn-default right_btn" name="show_news" id="<%=news[counter]._id%>">
                             <span class="glyphicon glyphicon-share-alt" aria-hidden="true">&nbsp; Подробнее</span>
                         </button>
+                        <h4 align="center" id="title_<%=news[counter]._id%>"><%= news[counter].title%></h4>
                         <div class="disp" id="text_<%=news[counter]._id%>"><%= news[counter].text%></div>
+                        <div class="disp" id="url_<%=news[counter]._id%>"><%= news[counter].url%></div>
+                        <div><img src='<%= news[counter].url%>' class="thumbnail"/></div>
                     </div>
                     <div class="panel-footer">
                         <h4>Автор: <%= news[counter].author %></h4>
@@ -53,6 +55,10 @@
                         <input type="text" class="form-control" name="title" id="titleNews" required>
                     </div>
                     <div class="form-group">
+                        <label>URL фотографии:</label>
+                        <input type="text" class="form-control" name="url" id="urlNews" required>
+                    </div>
+                    <div class="form-group">
                         <label>Содержание:</label>
                         <textarea id="textNews" class="form-control" rows="13"></textarea>
                     </div>
@@ -69,7 +75,7 @@
             <br>
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
-                <h2 align='center' id="itemTitle"></h2>
+                <h2 align='center' id="itemTitle" class = "news_header"></h2>
                 <%if(firm && firm.local.is_admin){%>
                 <button type="button" class="btn btn-default" name="edit_news"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Редактировать</button>
                 <button type="button" class="btn btn-default" name="delete_news"><span class="glyphicon glyphicon-remove"></span>&nbsp;Удалить</button>
@@ -77,12 +83,17 @@
                 <%}%>
             </div>
             <div class="modal-body">
+                    <p id="itemURL"></p>
                     <p id="itemText"></p>
                     <div id="itemId" class="disp"></div>
                 <form id = "editNews" class="toggleForm disp">
                     <div class="form-group">
                         <label>Название:</label>
                         <input type="text" class="form-control" name="title" id="titleNewsE" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL фотографии:</label>
+                        <input type="text" class="form-control" name="url" id="urlNewsE" required>
                     </div>
                     <div class="form-group">
                         <label>Содержание:</label>

@@ -78,13 +78,13 @@ Transaction.prototype.totalCosts = function(request, firm, send) {
                  "  Тариф на перевозку: " + S + "$/" + units + "  Время в пути(в днях): " + t +
                  "  Постоянные завтраты: " + K + "$" + "  Длительность страхового завпаса(в днях): " + d;
     var results = "Общие логистические издержки составили " + total_costs.toFixed(2) + "$. Затраты на управление запасами - " + stock_costs.toFixed(2) + "$ (" + stock_perc.toFixed(2) + "%).";
-    if (request.is_logged) {
+    if (request.is_logged == 'true') {
         var t = new Transaction("total");
         t.recordOperation(params, results, request.additional, firm._id);
+        var query = {};
+        query['local.operations'] = firm.local.operations + 1;
+        Firm.update({_id: firm._id}, query, function (err) {});
     }
-    var query = {};
-    query['local.operations'] = firm.local.operations + 1;
-    Firm.update({_id: firm._id}, query, function (err) {});
     var result = {total_costs: total_costs.toFixed(2), stock_costs: stock_costs.toFixed(2), stock_perc: stock_perc.toFixed(2)};
     send(result);
 };

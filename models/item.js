@@ -10,6 +10,7 @@ var itemSchema = mongoose.Schema({
     title       :{ type : String, unique: true, required : true},
     author      :{ type : String, required : true },
     text        :{ type : String, required : true },
+    url        :{ type : String, required : false },
     updated_at  :{ type: Date, default: Date.now, required : true }
 });
 

@@ -43,7 +43,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator());
 
-app.use(session({ secret: 'SessionSecret' })); // session secret
+app.use(session({ secret: 'SessionSecret',
+                  resave: true,
+                  saveUninitialized: true
+                  }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());

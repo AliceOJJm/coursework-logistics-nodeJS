@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/stylesheets/morris.css">
     <script src="/javascripts/morris.js"></script>
     <script src="/javascripts/raphael.js"></script>
+    <script src="/javascripts/scroll-startstop.events.jquery.js" type="text/javascript"></script>
     <link href="/javascripts/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <script src="/javascripts/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 </head>
@@ -41,11 +42,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <ul class="nav navbar-nav navbar-right">
                     <% if (firm){ %>
-                    <li><a href="/profile"><%= firm.local.title%></a></li>
-                    <li><a href="/logout">Выход</a></li>
+                    <li class="li-nav"><a href="/profile"><%= firm.local.title%></a></li>
+                    <li class="li-nav"><a href="/logout">Выход</a></li>
                     <% } else {%>
-                    <li><a id="login">Вход</a></li>
-                    <li><a href="/signup">Регистрация</a></li>
+                    <li class="li-nav"><a id="login">Вход</a></li>
+                    <li class="li-nav"><a href="/signup">Регистрация</a></li>
                     <% } %>
                 </ul>
             </ul>
@@ -56,23 +57,23 @@
     <div class="container">
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Главная</a></li>
-                <li><a href="/about">О транспортной логистике</a></li>
+                <li class="li-nav"><a href="/">Главная</a></li>
+                <li class="li-nav"><a href="/about">О транспортной логистике</a></li>
                 <% if (firm && firm.local.is_admin){ %>
-                    <li><a href="/content_management">Управление контентом</a></li>
+                    <li class="li-nav"><a href="/content_management">Управление контентом</a></li>
                 <% } %>
-                <li class="dropdown">
+                <li class="dropdown li-nav">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Расчёт и планирование<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/total_costs">Общие логистические издержки</a></li>
-                        <li><a href="/planning_supplies/about">Оптимальный размер поставки</a></li>
-                        <li><a href="/transportation/about">Транспортировка грузов</a></li>
+                        <li class="li-nav"><a href="/total_costs">Общие логистические издержки</a></li>
+                        <li class="li-nav"><a href="/planning_supplies/about">Оптимальный размер поставки</a></li>
+                        <li class="li-nav"><a href="/transportation/about">Транспортировка грузов</a></li>
                     </ul>
                 </li>
             </ul>
             <% if (firm){ %>
             <ul class="nav navbar-nav navbar-right second-navbar-right">
-                <li><a href="/history">История расчётов</a></li>
+                <li class="li-nav"><a href="/history">История расчётов</a></li>
             </ul>
             <% } %>
         </div><!--/.nav-collapse -->

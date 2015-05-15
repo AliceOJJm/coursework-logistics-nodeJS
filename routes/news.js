@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', isAdmin, function(req, res) {
-    var item = {title: req.body.title, text: req.body.text};
+    var item = {title: req.body.title, text: req.body.text, url: req.body.url};
     item['author'] = req.user.local.proxy + " (" + req.user.local.title + ")";
     Item.create(item, function(err){
         res.end("yes");
@@ -32,7 +32,7 @@ router.post('/', isAdmin, function(req, res) {
 });
 
 router.put('/', isAdmin, function(req, res) {
-    var item = {title: req.body.title, text: req.body.text};
+    var item = {title: req.body.title, text: req.body.text, url: req.body.url};
     Item.update({_id: req.body.id}, item, function(err){
         res.end("yes");
     });
