@@ -5,12 +5,10 @@ var LocalStrategy     = require('passport-local').Strategy;
 var Firm              = require('../models/firm');
 module.exports = function(passport) {
 
-    // used to serialize the user for the session
     passport.serializeUser(function(firm, done) {
         done(null, firm.id);
     });
 
-    // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         Firm.findById(id, function(err, firm) {
             done(err, firm);
